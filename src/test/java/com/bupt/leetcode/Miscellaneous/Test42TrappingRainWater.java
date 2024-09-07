@@ -35,22 +35,42 @@ public class Test42TrappingRainWater {
      * @return
      */
     public int trap(int[] height) {
+        // int n = height.length;
+        // if (n == 0) return 0;
+        // int res = 0;
+        // for (int i = 1; i < n - 1; i++) {
+        //     int lMax = 0, rMax = 0;
+        //     // 找右边最高
+        //     for (int j = i; j < n; j++) {
+        //         rMax = Math.max(rMax, height[j]);
+        //     }
+        //     // 找左边最高
+        //     for (int j = i; j >= 0; j--) {
+        //         lMax = Math.max(lMax, height[j]);
+        //     }
+        //     res += Math.min(lMax, rMax) - height[i];
+        // }
+        // return res;
+
         int n = height.length;
         if (n == 0) return 0;
-        int[] leftMax = new int[n];
-        int[] rightMax = new int[n];
-        leftMax[0] = height[0];
-        rightMax[n - 1] = height[n - 1];
-        for (int i = 1; i < n; i++) {
-            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
-        }
-        for (int i = n - 2; i >= 0; i--) {
-            rightMax[i] = Math.max(rightMax[i + 1], height[i]);
-        }
         int res = 0;
-        for (int i = 0; i < n; i++) {
-            res += Math.min(leftMax[i], rightMax[i]) - height[i];
-        }
+        // 数组充当备忘录
+        int[] l_max = new int[n];
+        int[] r_max = new int[n];
+        // 初始化 base case
+        l_max[0] = height[0];
+        r_max[n - 1] = height[n - 1];
+        // 从左向右计算 l_max
+        for (int i = 1; i < n; i++)
+            l_max[i] = Math.max(height[i], l_max[i - 1]);
+        // 从右向左计算 r_max
+        for (int i = n - 2; i >= 0; i--)
+            r_max[i] = Math.max(height[i], r_max[i + 1]);
+        // 计算答案
+        for (int i = 1; i < n - 1; i++)
+            res += Math.min(l_max[i], r_max[i]) - height[i];
+
         return res;
     }
 }

@@ -190,8 +190,10 @@ public class TestMiscellaneous {
     @Test
     public void testArrayDeque() {
         ArrayDeque<Integer> queue = new ArrayDeque<>(10);  // 指定容量，不指定默认为16
-        queue.offer(1);
-        queue.offer(2);
+//        queue.offer(1);
+//        queue.offer(2);
+        queue.push(1);
+        queue.push(2);
         System.out.println(queue.peek());
         System.out.println(queue.getLast());
     }
